@@ -12,7 +12,6 @@ from . import forms
 
 def loginPage(request):
     form = forms.LoginForm()
-    template = loader.get_template('autentication/login.html')
     if request.method == 'POST':
         form = forms.LoginForm(request.POST)
         if form.is_valid():
@@ -21,4 +20,4 @@ def loginPage(request):
             if user is not None:
                 login(request, user)
                 messages.error(request, 'Authentification error')
-    return HttpResponse(template.render(request, context={'form': form}))
+    return render(request, 'authentication/login.html', context={'form': form})
