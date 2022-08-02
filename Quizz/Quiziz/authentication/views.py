@@ -1,5 +1,5 @@
 from django.http import HttpResponse
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.contrib.auth import authenticate, login, logout
 from django.contrib import messages
 from django.template import loader
@@ -19,5 +19,11 @@ def loginPage(request):
                                 password=form.cleaned_data['password'],)
             if user is not None:
                 login(request, user)
+                messages.success(request,'Connected')
                 messages.error(request, 'Authentification error')
     return render(request, 'authentication/login.html', context={'form': form})
+
+
+def logoutUser(request):
+    logout(request)
+    return redirect('login')
